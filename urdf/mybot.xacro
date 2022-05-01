@@ -13,6 +13,8 @@
   <xacro:property name="wheel_mass" value="1"/>
   <xacro:property name="base_mass" value="5"/>
 
+  <xacro:include filename="$(find my_bot)/urdf/mybot_gazebo_plugins.xacro"/>
+
   <!--Color Properties-->
   <material name="blue">
     <color rgba="0 0 0.8 1"/>
@@ -154,6 +156,29 @@
   <xacro:wheel prefix="left_back" reflect="1"/>
   <xacro:wheel prefix="right_back" reflect="-1"/>
 
-  <xacro:include filename="$(find my_bot)/urdf/mybot_gazebo_plugins.xacro"/>
+  <!-- Hokuyo Laser -->
+  <link name="hokuyo_laser">
+    <visual>
+      <origin xyz="0.01 0 0.043" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="package://my_bot/meshes/hokuyo.dae"/>
+      </geometry>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.05 0.05 0.05"/>
+      </geometry>
+    </collision>
+    <xacro:box_inertia m="0.2" w="0.05" h="0.05" d="0.05"/>
+  </link>
+
+  <joint name="hokuyo_joint" type="fixed">
+    <axis xyz="0 1 0" />
+    <origin xyz="0.01 0 0.043" rpy="0 0 0"/>
+    <parent link="base_link"/>
+    <child link="hokuyo_laser"/>
+  </joint>
+
 
 </robot>
