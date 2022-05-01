@@ -78,6 +78,10 @@
     </collision>
   </link>
 
+  <gazebo reference="base_link">
+    <material>Gazebo/Orange</material>
+  </gazebo>
+
   <!--base_link to base_footprint Joint-->
   <joint name="base_link_joint" type="fixed">
     <origin xyz="0 0 0" rpy="0 0 0" />
@@ -102,6 +106,10 @@
     </collision>
     <xacro:sphere_inertia m="${caster_wheel_mass}" r="${caster_wheel_radius}"/>
   </link>
+
+  <gazebo reference="caster_wheel">
+    <material>Gazebo/Blue</material>
+  </gazebo>
 
   <!--Caster Wheel Joint-->
   <joint name="caster_wheel_joint" type="continuous">
@@ -130,6 +138,10 @@
       <xacro:cylinder_inertia m="${wheel_mass}" r="${wheel_radius}" h="0.005"/>
     </link>
 
+  <gazebo reference="${prefix}_wheel">
+    <material>Gazebo/Blue</material>
+  </gazebo>
+
     <joint name="${prefix}_wheel_joint" type="continuous">
       <axis xyz="-0.06 1 0" rpy="0 0 0" />
       <parent link="base_link"/>
@@ -141,5 +153,7 @@
   <!--Create Left & Right Back Wheel links/joints-->
   <xacro:wheel prefix="left_back" reflect="1"/>
   <xacro:wheel prefix="right_back" reflect="-1"/>
+
+  <xacro:include filename="$(find my_bot)/urdf/mybot_gazebo_plugins.xacro"/>
 
 </robot>
